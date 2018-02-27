@@ -471,6 +471,11 @@ class Diff(object):
 
             meta, _, path = line[1:].partition('\t')
             old_mode, new_mode, a_blob_id, b_blob_id, change_type = meta.split(None, 4)
+            # Change type can be R100
+            # R: status letter
+            # 100: score (in case of copy and rename)
+            change_type = change_type[0]
+            score = ''.join(change_type[1:]) or None
             path = path.strip()
             a_path = path.encode(defenc)
             b_path = path.encode(defenc)
